@@ -1,32 +1,48 @@
 <script>
-// a class representing a dependency
-// exposing it on window is necessary for testing
-window.Dep = class Dep {
-    constructor () {
+  window.Dep = class Dep {
+    constructor() {
       this.subscribers = new Set()
     }
-
-    depend () {
+    depend() {
       if (activeUpdate) {
-        // register the current active update as a subscriber
+        // register the current update
         this.subscribers.add(activeUpdate)
       }
     }
-
-    notify () {
-      // run all subscriber functions
-      this.subscribers.forEach(subscriber => subscriber())
+    notify() {
+      this.subscribers.forEach(sub => sub())
     }
-}
-
-let activeUpdate
-
-function autorun (update) {
-  function wrappedUpdate () {
-    activeUpdate = wrappedUpdate
-    update()
-    activeUpdate = null
   }
-  wrappedUpdate()
-}
+
+  let activeUpdate
+
+  function autorun(update) {
+    function wrapperUpdate() {
+      activeUpdate = wrapperUpdate;
+      update()
+      activeUpdate = null
+    }
+    wrapperUpdate()
+  }
+
+  const dep = new Dep()
+
+  autorun(() => {
+    dep.depend()
+    console.log('updated')
+  })
+  // should log: "updated"
+
+  dep.notify()
+  // should log: "updated"
+
+
+  autorun(() => {
+    dep.depend()
+    console.log('updated2')
+  })
+  // should log: "updated2"
+
+  dep.notify()
+  // should log: "updated2"
 </script>
