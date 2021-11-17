@@ -1,46 +1,33 @@
 <script src="../node_modules/vue/dist/vue.js"></script>
 
 <div id="app">
-  <smart-avatar username="vuejs"></smart-avatar>
+  <smart-avatar username="vuejs" id="foo">
+    <div slot="foo"></div>
+  </smart-avatar>
 </div>
 
 <script>
-// mock API
-function fetchURL (username, cb) {
-  setTimeout(() => {
-    // hard coded, bonus: exercise: make it fetch from gravatar!
-    cb('https://avatars3.githubusercontent.com/u/6128107?v=4&s=200')
-  }, 500)
-}
-
-const Avatar = {
-  props: ['src'],
-  template: `<img :src="src">`
-}
-
-function withAvatarURL (InnerComponent) {
-  return {
-    props: {
-      username: String
-    },
-    data () {
-      return {
-        url: 'http://via.placeholder.com/200x200'
-      }
-    },
-    created () {
-      fetchURL(this.username, (url) => { this.url = url })
-    },
-    render (h) {
-      return h(InnerComponent, { props: { src: this.url } })
-    }
+  // mock API
+  function fetchURL(username, cb) {
+    setTimeout(() => {
+      // hard coded, bonus: exercise: make it fetch from gravatar!
+      cb('https://avatars3.githubusercontent.com/u/6128107?v=4&s=200')
+    }, 500)
   }
-}
 
-const SmartAvatar = withAvatarURL(Avatar)
+  const Avatar = {
+    props: ['src'],
+    template: `<img :src="src">`
+  }
 
-new Vue({
-  el: '#app',
-  components: { SmartAvatar }
-})
+  function withAvatarURL(InnerComponent) {
+    // implement
+  }
+
+  const SmartAvatar = withAvatarURL(Avatar)
+
+  new Vue({
+    el: '#app',
+    components: { SmartAvatar }
+  })
 </script>

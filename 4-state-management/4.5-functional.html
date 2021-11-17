@@ -4,25 +4,7 @@
 
 <script>
 function app ({ el, model, view, actions }) {
-  const wrappedActions = {}
-
-  Object.keys(actions).forEach(key => {
-    const originalAction = actions[key]
-    wrappedActions[key] = () => {
-      vm.model = originalAction(vm.model)
-    }
-  })
-
-  const vm = new Vue({
-    el,
-    data: {
-      model
-    },
-    render (h) {
-      return view(h, this.model, wrappedActions)
-    },
-    methods: actions
-  })
+  // implement
 }
 
 // voila
