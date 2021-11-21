@@ -5,7 +5,22 @@
 </div>
 
 <script>
-// implement
+  // implement
+  Vue.component('example', {
+    functional: true, // 函数组件，没有生命周期，也没有任何状态
+    props: {
+      tags: {
+        type: Array,
+        default: () => []
+      }
+    },
+    render: function (h, context) {
+      const tags = context.props.tags
+      return h('div', context.data, tags.map((tag, index) => h(tag, index)))
+    }
 
-new Vue({ el: '#app' })
+
+  })
+
+  new Vue({ el: '#app' })
 </script>
